@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Геолокация — BOM</title>
+</head>
+<body>
+
+<h1>Определение местоположения</h1>
+
+<p><b>Широта:</b> <span id="lat">—</span></p>
+<p><b>Долгота:</b> <span id="lon">—</span></p>
+<p id="status"></p>
+
+<button onclick="getLocation()">Получить местоположение</button>
+
+<script>
+    function getLocation() {
+        const status = document.getElementById("status");
+        
+        if (!navigator.geolocation) {
+            status.textContent = "Геолокация не поддерживается вашим браузером.";
+            return;
+        }
+
+        status.textContent = "Определяем местоположение...";
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                document.getElementById("lat").textContent = position.coords.latitude;
+                document.getElementById("lon").textContent = position.coords.longitude;
+                status.textContent = "Местоположение успешно получено!";
+            },
+            (error) => {
+                status.textContent = "Ошибка: доступ к геолокации запрещён.";
+            }
+        );
+    }
+</script>
+
+</body>
+</html>
